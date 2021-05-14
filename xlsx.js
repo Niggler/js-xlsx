@@ -7727,6 +7727,8 @@ var PRN = (function() {
 				sep = str.charAt(4); str = str.slice(6);
 			}
 		}
+    else if(o.FS) sep = o.FS;
+
 		else sep = guess_sep(str.slice(0,1024));
 		var R = 0, C = 0, v = 0;
 		var start = 0, end = 0, sepcc = sep.charCodeAt(0), instr = false, cc=0;
@@ -7779,6 +7781,7 @@ var PRN = (function() {
 
 	function prn_to_sheet_str(str, opts) {
 		if(!(opts && opts.PRN)) return dsv_to_sheet_str(str, opts);
+    if(opts.FS !== ",") return dsv_to_sheet_str(str, opts);
 		if(str.slice(0,4) == "sep=") return dsv_to_sheet_str(str, opts);
 		if(str.indexOf("\t") >= 0 || str.indexOf(",") >= 0 || str.indexOf(";") >= 0) return dsv_to_sheet_str(str, opts);
 		return aoa_to_sheet(prn_to_aoa_str(str, opts), opts);
